@@ -78,12 +78,9 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      /* changed from center */
       align-items: flex-start;
       height: auto;
-      /* changed from 70vh */
       padding: 40px 40px 40px;
-      /* top padding increased to avoid overlap */
       max-width: 800px;
       margin: 0 auto;
       color: #555;
@@ -91,8 +88,6 @@
       transform: translateY(0);
     }
 
-
-    /* Dark Mode */
     body.dark-mode {
       background: #121212;
       color: #ffffff;
@@ -113,8 +108,6 @@
     body.dark-mode .nav-item.active {
       background: #444;
     }
-
-    /* Country & Time styling - fixed in corners */
     .corner-info {
       position: fixed;
       font-size: 0.9rem;
@@ -270,18 +263,14 @@
       font-size: 1.3rem;
     }
 
-    /* Hover effect */
     .social-btn:hover {
       background-color: #0077b5;
-      /* LinkedIn blue */
       color: white;
       border-color: #0077b5;
     }
 
-    /* Different hover colors for other platforms */
     .social-btn[aria-label="Email"]:hover {
       background-color: #ea4335;
-      /* Gmail red */
       border-color: #ea4335;
     }
 
@@ -326,7 +315,6 @@
     footer {
       position: fixed;
       bottom: 10px;
-      /* little gap from bottom */
       left: 50%;
       transform: translateX(-50%);
       z-index: 1000;
@@ -335,7 +323,6 @@
       max-width: 1000px;
 
       background: #d8e7eb;
-      /* same as page bg */
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -391,13 +378,11 @@
 
     .experience-card h3 {
       font-size: 1px;
-      /* role title */
     }
 
     .experience-card p,
     .experience-card li {
       font-size: 20px;
-      /* description text */
       line-height: 1.4;
     }
 
@@ -450,7 +435,6 @@
       font-size: 13px;
     }
 
-    /* Modal styles */
     #contactModal {
       display: none;
       position: fixed;
@@ -567,7 +551,6 @@
             <p style="margin: 2px 0; color: #666;">Jawaharlal Nehru Technological University</p>
             <p style="margin: 2px 0; color: #666;">2018 – 2022</p>
           </div>
-          <!-- ✅ Contact Modal -->
           <div id="contactModal">
             <div class="modal-content">
               <span class="close" onclick="closeModal()">&times;</span>
@@ -624,10 +607,6 @@
             <li>Built data models for Power BI and Tableau dashboards</li>
             <li>Optimized SQL queries for performance improvements</li>
           </ul>
-          <!--<div class="skills">
-            <strong>Key Skills:</strong>
-            <span>Snowflake</span><span>SQL</span><span>Power BI</span><span>Tableau</span>
-          </div>-->
         </div>
 
         <div class="role">
@@ -639,10 +618,6 @@
               timelines</li>
             <li>Supported data validation and testing activities</li>
           </ul>
-          <!--<div class="skills">
-            <strong>Key Skills:</strong>
-            <span>SQL</span><span>Snowflake</span><span>Reporting</span><span>Testing</span>
-          </div>-->
         </div>
       </div>
 
@@ -657,10 +632,6 @@
             <li>Implemented CRUD operations and integrated MySQL/SQL with Spring Boot</li>
             <li>Worked on Java-based modules covering OOPs concepts, exception handling, and collections</li>
           </ul>
-          <!--<div class="skills">
-            <strong>Key Skills:</strong>
-            <span>Java</span><span>Spring Boot</span><span>SQL</span>
-          </div>-->
         </div>
       </div>
 
@@ -701,12 +672,9 @@
       </div>
     </div>
 
-
-    <!-- Country & Time fixed in corners, outside tab-content -->
     <div class="corner-info top-left" id="country">🌍 India</div>
     <div class="corner-info top-right" id="time">🕒 --:--:--</div>
 
-    <!-- JavaScript -->
     <script>
       const navItems = document.querySelectorAll('.nav-item');
       const tabContents = document.querySelectorAll('.tab-content');
@@ -718,12 +686,10 @@
 
           if (item === darkToggle) {
             const isDark = document.body.classList.toggle('dark-mode');
-            // icon: moon means it's light mode, sun means it's dark mode
             darkToggle.innerHTML = `<i class="fas fa-${isDark ? 'sun' : 'moon'}"></i>`;
             return;
           }
 
-          // Tab switching
           navItems.forEach(nav => {
             if (nav !== darkToggle) nav.classList.remove('active');
           });
@@ -736,7 +702,6 @@
         });
       });
 
-      // Update time every second
       function updateTime() {
         const now = new Date();
         const timeString = now.toLocaleTimeString('en-IN', { hour12: false });
@@ -744,27 +709,15 @@
       }
       updateTime();
       setInterval(updateTime, 1000);
-
-      // Country info (static here, can be dynamic with APIs)
       document.getElementById('country').textContent = '🌍 India';
-
-      // About link tab switch
       document.getElementById('aboutLink').addEventListener('click', function (e) {
         e.preventDefault();
-
-        // Remove active from nav items (except darkToggle)
         document.querySelectorAll('.nav-item').forEach(nav => {
           if (nav !== darkToggle) nav.classList.remove('active');
         });
-
-        // Set active nav item to 'About'
         const aboutNav = document.querySelector('.nav-item[data-tab="about"]');
         aboutNav.classList.add('active');
-
-        // Hide all tab contents
         document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-
-        // Show About tab content
         document.getElementById('about').classList.add('active');
       });
     </script>
