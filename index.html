@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Deepika's portfolio</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #d8e7eb;
+      color: #000;
+      margin: 0;
+      padding: 20px;
+      transition: background 0.3s, color 0.3s;
+      height: 100%;
+
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 20px;
+      background: white;
+      border-radius: 50px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      width: fit-content;
+      margin: 20px auto;
+      gap: 25px;
+      transition: background 0.3s;
+      position: sticky;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+
+
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #333;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 8px 12px;
+      border-radius: 20px;
+      transition: background 0.3s, color 0.3s;
+      cursor: pointer;
+
+    }
+
+    .nav-item:hover {
+      background: #f0f0f0;
+    }
+
+    .nav-item.active {
+      background: #e0e0e0;
+    }
+
+    .nav-item i {
+      font-size: 16px;
+    }
+
+    .tab-content {
+      display: none;
+      padding: 30px 40px;
+      text-align: left;
+      font-size: 2rem;
+      transition: color 0.3s;
+      flex: 1;
+    }
+
+    .tab-content.active {
+      display: block;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      /* changed from center */
+      align-items: flex-start;
+      height: auto;
+      /* changed from 70vh */
+      padding: 40px 40px 40px;
+      /* top padding increased to avoid overlap */
+      max-width: 800px;
+      margin: 0 auto;
+      color: #555;
+      transition: transform 0.6s ease;
+      transform: translateY(0);
+    }
+
+
+    /* Dark Mode */
+    body.dark-mode {
+      background: #121212;
+      color: #ffffff;
+    }
+
+    body.dark-mode .navbar {
+      background: #1e1e1e;
+    }
+
+    body.dark-mode .nav-item {
+      color: #ccc;
+    }
+
+    body.dark-mode .nav-item:hover {
+      background: #333;
+    }
+
+    body.dark-mode .nav-item.active {
+      background: #444;
+    }
+
+    /* Country & Time styling - fixed in corners */
+    .corner-info {
+      position: fixed;
+      font-size: 0.9rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      color: gray;
+      font-weight: 500;
+      user-select: none;
+      z-index: 1000;
+    }
+
+    .top-left {
+      top: 10px;
+      left: 10px;
+    }
+
+    .top-right {
+      top: 10px;
+      right: 10px;
+    }
+
+    .project-badge {
+      display: inline-block;
+      background-color: lightblue;
+      color: #111;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 15px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    .project-badge:hover {
+      background-color: #e9e9e9;
+    }
+
+    .profile-button {
+      display: inline-flex;
+      align-items: center;
+      background-color: #f3f3f3;
+      border-radius: 9999px;
+      padding: 6px 12px;
+      font-family: sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: #111;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+      text-decoration: none;
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+
+    .profile-button:hover {
+      background-color: #e9e9e9;
+    }
+
+    .profile-button img {
+      width: 28px;
+      height: 28px;
+      border-radius: 9999px;
+      margin-right: 8px;
+    }
+
+    .profile-button .arrow {
+      margin-left: 8px;
+      font-size: 16px;
+    }
+
+    .profile-wrapper {
+      display: flex;
+      padding: 30px;
+      gap: 30px;
+    }
+
+    .profile-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 180px;
+    }
+
+    .location-language {
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    .language-badge {
+      background: #eee;
+      padding: 4px 8px;
+      border-radius: 10px;
+      margin: 0 2px;
+      font-size: 0.75rem;
+    }
+
+    .profile-pic {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #ddd;
+    }
+
+    .profile-details {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .profile-details h1 {
+      font-size: 2.5rem;
+      margin: 0 0 0.5rem;
+    }
+
+    .profile-details h2 {
+      font-size: 1.2rem;
+      color: gray;
+      margin: 0 0 1rem;
+    }
+
+    .profile-details p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #444;
+      margin-bottom: 1rem;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 30px;
+      color: #111;
+      font-family: Arial, sans-serif;
+      font-weight: 200;
+      font-size: 1rem;
+      text-decoration: none;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease, color 0.3s ease;
+      border: 1.5px solid transparent;
+    }
+
+    .social-btn i {
+      font-size: 1.3rem;
+    }
+
+    /* Hover effect */
+    .social-btn:hover {
+      background-color: #0077b5;
+      /* LinkedIn blue */
+      color: white;
+      border-color: #0077b5;
+    }
+
+    /* Different hover colors for other platforms */
+    .social-btn[aria-label="Email"]:hover {
+      background-color: #ea4335;
+      /* Gmail red */
+      border-color: #ea4335;
+    }
+
+    .social-btn[aria-label="GitHub"]:hover {
+      background-color: #333;
+      border-color: #333;
+    }
+
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+      padding: 0 20px;
+      margin-top: 20px;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: auto;
+      border-radius: 16px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+      object-fit: cover;
+      transition: transform 0.4s ease, box-shadow 0.3s ease;
+      transform: rotate(-1deg);
+    }
+
+    .gallery img:hover {
+      transform: rotate(1deg) scale(1.05);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    body.dark-mode footer {
+      background-color: #1e1e1e;
+      color: #ccc;
+    }
+
+    body.dark-mode footer a {
+      color: #ccc;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 10px;
+      /* little gap from bottom */
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+
+      width: 90%;
+      max-width: 1000px;
+
+      background: #d8e7eb;
+      /* same as page bg */
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    footer a {
+      color: #555;
+      text-decoration: none;
+      margin-left: 15px;
+      font-size: 1.2rem;
+      transition: color 0.3s ease;
+    }
+
+    footer a:hover {
+      color: #000;
+    }
+
+    footer .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    footer .footer-right {
+      display: flex;
+      align-items: center;
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .experience-card {
+      padding: 20px;
+      position: relative;
+      border-radius: 12px;
+      margin: 20px 0 20px 60px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .experience-card h2 {
+      color: black;
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    .experience-card h3 {
+      font-size: 1px;
+      /* role title */
+    }
+
+    .experience-card p,
+    .experience-card li {
+      font-size: 20px;
+      /* description text */
+      line-height: 1.4;
+    }
+
+    .role {
+      border-left: 3px solid black;
+      margin: 20px 0;
+      padding-left: 15px;
+    }
+
+    .role h3 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: bold;
+      color: #444;
+    }
+
+    .date {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .role ul {
+      margin-top: 8px;
+      padding-left: 20px;
+    }
+
+    .role ul li {
+      margin-bottom: 6px;
+    }
+
+    .skills {
+      margin-top: 12px;
+      padding-left: 15px;
+    }
+
+    .skills strong {
+      display: block;
+      margin-bottom: 6px;
+      color: black;
+      font-size: 1.5rem;
+    }
+
+    .skills span {
+      display: inline-block;
+      background: #e8f3f9;
+      color: black;
+      padding: 5px 10px;
+      margin: 4px;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+
+    /* Modal styles */
+    #contactModal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+    }
+
+    #contactModal .modal-content {
+      background: #fff;
+      max-width: 500px;
+      margin: 10% auto;
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    #contactModal .close {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #contactModal p {
+      margin: 15px 0;
+      font-size: 18px;
+    }
+
+    #contactModal a {
+      color: #0073e6;
+      text-decoration: none;
+    }
+
+    #contactModal i {
+      margin-right: 8px;
+      color: #0073e6;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="nav-item active" data-tab="home"><i class="fas fa-home"></i> Home</div>
+    <div class="nav-item" data-tab="about"><i class="fas fa-user"></i> About</div>
+    <div class="nav-item" data-tab="work"><i class="fas fa-th"></i> Work</div>
+    <div class="nav-item" data-tab="Interests"><i class="fa-solid fa-star"></i> interests</div>
+    <div class="nav-item" id="darkToggle"><i class="fas fa-moon"></i></div>
+  </div>
+
+  <!-- Content Sections -->
+  <div class="container">
+    <div id="home" class="tab-content active">
+      <div class="project-badge">Open to work</div>
+      <h1>🔍 Queries are my language, data is my canvas.</h1>
+      <p style="max-width: 500px; color: gray; font-size: 1.2rem;">
+        Hey,I'm Deepika, a Data Engineer at Accenture,
+      </p>
+      <p style="max-width: 700px; color: gray; font-size: 1.1rem;">
+        I don’t just work with data — I listen to it, shape it, and let it speak..
+      </p>
+      <a href="#" id="aboutLink" class="profile-button">
+        <img src="Media.jpeg" alt="Deepika" />
+        About – Devi Deepika
+        <span class="arrow">›</span>
+      </a>
+    </div>
+
+    <div id="about" class="tab-content">
+      <div class="profile-wrapper">
+        <div class="profile-left">
+          <img src="Media.jpeg" alt="Profile Photo" class="profile-pic" />
+          <div class="location-language">
+            📍 India/Andhra Pradesh<br /><br>
+            <span class="language-badge">English</span>
+            <span class="language-badge">Telugu</span>
+          </div>
+        </div>
+
+        <div class="profile-details">
+          <h1>Devi Deepika Karri</h1>
+          <h2>Data Engineer</h2>
+
+          <div class="social-links">
+            <a href="https://github.com/yourusername" target="_blank" aria-label="GitHub" class="social-btn">
+              <i class="fab fa-github"></i> GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/devi-deepika" target="_blank" aria-label="LinkedIn" class="social-btn">
+              <i class="fab fa-linkedin-in"></i> LinkedIn
+            </a>
+            <a href="mailto:devideepika9813@gmail.com" aria-label="Email" class="social-btn">
+              <i class="fas fa-envelope"></i> Email
+            </a>
+            <button onclick="openModal()" class="social-btn"><i class="fas fa-phone"></i> Contact</button>
+          </div>
+
+          <p>
+            I’m a Data Engineer based in Hyderabad with 3 years of experience in Snowflake development and optimization,
+            focusing on creating and enhancing views, procedures, and queries.
+            I’ve also worked on validating Tableau reports by testing the underlying SQL logic and contributed to
+            critical financial data processing that supports business decisions.
+          </p>
+          <div style="margin-top: 25px;">
+            <h3 style="font-size: 1.3rem; font-weight: bold; margin-bottom: 10px;">🎓 Studies</h3>
+            <p style="margin: 0; font-weight: bold;">B.Tech in Computer Science</p>
+            <p style="margin: 2px 0; color: #666;">Jawaharlal Nehru Technological University</p>
+            <p style="margin: 2px 0; color: #666;">2018 – 2022</p>
+          </div>
+          <!-- ✅ Contact Modal -->
+          <div id="contactModal">
+            <div class="modal-content">
+              <span class="close" onclick="closeModal()">&times;</span>
+              <h2>Contact Me</h2>
+
+              <p>
+                <i class="fas fa-envelope"></i>
+                <strong>Email:</strong>
+                <a href="mailto:devideepika9813@gmail.com">devideepika9813@gmail.com</a>
+              </p>
+
+              <p>
+                <i class="fas fa-phone"></i>
+                <strong>Phone:</strong>
+                <a href="tel:+916302571439">+916302571439</a>
+              </p>
+
+              <p>
+                <i class="fab fa-linkedin"></i>
+                <strong>LinkedIn:</strong>
+                <a href="https://www.linkedin.com/in/devi-deepika-karri/" target="_blank">
+                  linkedin.com/in/devi-deepika-karri
+                </a>
+              </p>
+            </div>
+          </div>
+
+
+          <script>
+            function openModal() {
+              document.getElementById("contactModal").style.display = "block";
+            }
+            function closeModal() {
+              document.getElementById("contactModal").style.display = "none";
+            }
+            window.onclick = function (event) {
+              const modal = document.getElementById("contactModal");
+              if (event.target === modal) {
+                modal.style.display = "none";
+              }
+            }
+          </script>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="work" class="tab-content">
+      <h2>Work Experience</h2>
+
+      <div class="experience-card">
+        <h2>Accenture — Hyderabad, India</h2>
+
+        <div class="role">
+          <h3>Analyst</h3>
+          <span class="date">2024 – Present</span>
+          <ul>
+            <li>Created and enhanced Snowflake views, procedures, and tables</li>
+            <li>Developed Snowflake scripts to handle complex business scenarios</li>
+            <li>Built data models for Power BI and Tableau dashboards</li>
+            <li>Optimized SQL queries for performance improvements</li>
+          </ul>
+          <!--<div class="skills">
+            <strong>Key Skills:</strong>
+            <span>Snowflake</span><span>SQL</span><span>Power BI</span><span>Tableau</span>
+          </div>-->
+        </div>
+
+        <div class="role">
+          <h3>Associate</h3>
+          <span class="date">2022 – 2024</span>
+          <ul>
+            <li>Contributed to critical projects like year-end planning and restatements with wide business impact</li>
+            <li>Handled quarter-end activities and fixed data processing of financial information, ensuring accuracy and
+              timelines</li>
+            <li>Supported data validation and testing activities</li>
+          </ul>
+          <!--<div class="skills">
+            <strong>Key Skills:</strong>
+            <span>SQL</span><span>Snowflake</span><span>Reporting</span><span>Testing</span>
+          </div>-->
+        </div>
+      </div>
+
+      <div class="experience-card">
+        <h2>Cognizant — Hyderabad, India(Internship)</h2>
+
+        <div class="role">
+          <h3>Java Full Stack Engineer</h3>
+          <span class="date">2021(Dec) – 2022(May)</span>
+          <ul>
+            <li>Built and tested RESTful APIs using Spring Boot for sample applications</li>
+            <li>Implemented CRUD operations and integrated MySQL/SQL with Spring Boot</li>
+            <li>Worked on Java-based modules covering OOPs concepts, exception handling, and collections</li>
+          </ul>
+          <!--<div class="skills">
+            <strong>Key Skills:</strong>
+            <span>Java</span><span>Spring Boot</span><span>SQL</span>
+          </div>-->
+        </div>
+      </div>
+
+
+      <div class="experience-card">
+        <h2>Technical Skills</h2>
+        <div class="skills">
+          <span>Snowflake</span><span>SQL</span><span>HTML</span><span>CSS</span><span>Power
+            BI</span><span>Tableau</span>
+          <span>Testing</span><span>JavaScript(beginner)</span>
+          <span>Java(Basics)</span><span>Spring Boot(Basics)</span>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div id="Interests" class="tab-content">
+      <h2 class="section-title">🎨 Beyond Work</h2>
+      <p class="section-text" style="font-size: 1.1rem; color: #444; max-width: 700px;">
+        Outside of data and code, I find joy in putting pencil to paper.
+      </p>
+      <p class="section-text" style="font-size: 1.1rem; color: #444; max-width: 700px;">
+
+        I enjoy spending my free time doing things that make me happy and relaxed. I love watching anime,sketching,
+        listening to music and exploring new things online.These small hobbies bring me joy and help me stay inspired in
+        everyday life.
+        Each drawing is a moment of focus, emotion, and imagination.
+        I also enjoy crafting - like this paper flower i made -- it's fun to turn simple things into something beautiful
+      </p>
+
+      <div class="gallery">
+        <img src="Naruto.jpeg" alt="Sketch 1" />
+        <img src="Nature.jpeg" alt="Sketch 2" />
+        <img src="image.jpeg" alt="Sketch 3" />
+        <img src="paper_flower.jpeg" alt="Sketch 4" />
+
+      </div>
+    </div>
+
+
+    <!-- Country & Time fixed in corners, outside tab-content -->
+    <div class="corner-info top-left" id="country">🌍 India</div>
+    <div class="corner-info top-right" id="time">🕒 --:--:--</div>
+
+    <!-- JavaScript -->
+    <script>
+      const navItems = document.querySelectorAll('.nav-item');
+      const tabContents = document.querySelectorAll('.tab-content');
+      const darkToggle = document.getElementById('darkToggle');
+
+      navItems.forEach(item => {
+        item.addEventListener('click', () => {
+          const target = item.getAttribute('data-tab');
+
+          if (item === darkToggle) {
+            const isDark = document.body.classList.toggle('dark-mode');
+            // icon: moon means it's light mode, sun means it's dark mode
+            darkToggle.innerHTML = `<i class="fas fa-${isDark ? 'sun' : 'moon'}"></i>`;
+            return;
+          }
+
+          // Tab switching
+          navItems.forEach(nav => {
+            if (nav !== darkToggle) nav.classList.remove('active');
+          });
+          item.classList.add('active');
+
+          tabContents.forEach(tab => {
+            tab.classList.remove('active');
+            if (tab.id === target) tab.classList.add('active');
+          });
+        });
+      });
+
+      // Update time every second
+      function updateTime() {
+        const now = new Date();
+        const timeString = now.toLocaleTimeString('en-IN', { hour12: false });
+        document.getElementById('time').textContent = `🕒 ${timeString}`;
+      }
+      updateTime();
+      setInterval(updateTime, 1000);
+
+      // Country info (static here, can be dynamic with APIs)
+      document.getElementById('country').textContent = '🌍 India';
+
+      // About link tab switch
+      document.getElementById('aboutLink').addEventListener('click', function (e) {
+        e.preventDefault();
+
+        // Remove active from nav items (except darkToggle)
+        document.querySelectorAll('.nav-item').forEach(nav => {
+          if (nav !== darkToggle) nav.classList.remove('active');
+        });
+
+        // Set active nav item to 'About'
+        const aboutNav = document.querySelector('.nav-item[data-tab="about"]');
+        aboutNav.classList.add('active');
+
+        // Hide all tab contents
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+
+        // Show About tab content
+        document.getElementById('about').classList.add('active');
+      });
+    </script>
+
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-left">
+        © 2025 <strong>Devi Deepika</strong> / Built with 💙 HTML, CSS & JavaScript
+      </div>
+      <div class="footer-right">
+        <a href="https://github.com/yourusername" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/devi-deepika" target="_blank" title="LinkedIn"><i
+            class="fab fa-linkedin"></i></a>
+        <a href="mailto:devideepika9813@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+      </div>
+    </footer>
+</body>
+
+</html>
