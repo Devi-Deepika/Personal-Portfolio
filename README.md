@@ -6,7 +6,7 @@ This is a simple **responsive portfolio website** built with **HTML, CSS, and Ja
 ---
 
 ## 🚀 Live Demo
-🔗 [View Portfolio]()  
+🔗 [View Portfolio](https://devi-deepika.github.io/Personal-Portfolio/)  
 
 ---
 
