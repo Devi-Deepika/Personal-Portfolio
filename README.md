@@ -14,10 +14,9 @@ This is a simple **responsive portfolio website** built with **HTML, CSS, and Ja
 - 🏠 **Home** – Short intro and tagline  
 - 👩‍💻 **About** – Profile details, education, and contact info  
 - 💼 **Work** – Experience at Accenture, Cognizant, etc.  
-- ⭐ **Interests** – My hobbies like sketching & art  
+- ⭐ **Interests** – My hobbies like sketching & art etc.
 - 🌙 **Dark Mode** toggle  
 - 📍 Country & real-time clock display  
-- 📞 Contact modal with email, phone, and LinkedIn  
 
 ---
 
