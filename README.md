@@ -12,7 +12,7 @@ This is a simple **portfolio website** built with **HTML, CSS, and JavaScript** 
 
 ## 📌 Features
 - 🏠 **Home** – Short intro and tagline  
-- 👩‍💻 **About** – Profile details, education, and contact info  
+- 👩‍💻 **About** – Profile details, education
 - 💼 **Work** – Experience at Accenture, Cognizant, etc.  
 - ⭐ **Interests** – My hobbies like sketching & art etc.
 - 🌙 **Dark Mode** toggle  
