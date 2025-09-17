@@ -1,7 +1,7 @@
 # 🌐 Personal Portfolio — Devi Deepika
 
 Welcome to my personal portfolio repository!  
-This is a simple **responsive portfolio website** built with **HTML, CSS, and JavaScript** to showcase my professional journey, technical expertise, and projects.  
+This is a simple **portfolio website** built with **HTML, CSS, and JavaScript** to showcase my professional journey, technical expertise, and projects.  
 
 ---
 
