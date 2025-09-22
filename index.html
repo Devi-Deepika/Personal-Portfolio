@@ -28,10 +28,9 @@
       <p style="max-width: 700px; color: gray; font-size: 1.1rem;">
         I don’t just work with data — I listen to it, shape it, and let it speak....
       </p>
-      <a href="#" id="aboutLink" class="profile-button">
-        <img src="Media.jpeg" alt="Deepika" />
-        About – Devi Deepika
-        <span class="arrow">›</span>
+      <a href="Deepika_Resume.pdf" download class="profile-button">
+      <i class="fas fa-file-pdf"></i>
+      Download Resume
       </a>
     </div>
 
@@ -205,16 +204,6 @@
       updateTime();
       setInterval(updateTime, 1000);
       document.getElementById('country').textContent = '🌍 India';
-      document.getElementById('aboutLink').addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelectorAll('.nav-item').forEach(nav => {
-          if (nav !== darkToggle) nav.classList.remove('active');
-        });
-        const aboutNav = document.querySelector('.nav-item[data-tab="about"]');
-        aboutNav.classList.add('active');
-        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-        document.getElementById('about').classList.add('active');
-      });
     </script>
 
 
